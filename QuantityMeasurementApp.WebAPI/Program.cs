@@ -25,27 +25,22 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connStr));
 
 // Redis - optional, app still works without it
-var redisConn = builder.Configuration.GetConnectionString("Redis");
-if (!string.IsNullOrWhiteSpace(redisConn))
+var redisConnection = builder.Configuration["Redis"];
+
+if (!string.IsNullOrEmpty(redisConnection))
 {
     try
     {
-        builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
-            ConnectionMultiplexer.Connect(redisConn));
-    }
-    catch
-    {
-        builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
-            ConnectionMultiplexer.Connect("localhost:6379,abortConnect=false"));
-    }
-}
-else
-{
-    builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
-        ConnectionMultiplexer.Connect("localhost:6379,abortConnect=false"));
-}
-builder.Services.AddScoped<RedisCacheService>();
+        var redis = ConnectionMultiplexer.Connect(redisConnection);
+        builder.Services.AddSingleton<IConnectionMultiplexer>(redis);
 
+        builder.Services.AddScoped<RedisCacheService>();
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("Redis failed: " + ex.Message);
+    }
+}
 // Services
 builder.Services.AddScoped<IQuantityService, QuantityService>();
 builder.Services.AddScoped<IConversionService, ConversionService>();
