@@ -93,25 +93,13 @@ builder.Services.AddCors(options =>
 
 // PORT - Railway injects this automatically
 var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
-builder.WebHost.UseUrls($"http://*:{port}");
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(int.Parse(port));
+});
 
 var app = builder.Build();
 
-// Auto-run migrations on startup - creates tables if they don't exist
-// using (var scope = app.Services.CreateScope())
-// {
-//     try
-//     {
-//         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-//         db.Database.Migrate();
-//         Console.WriteLine("Database migrations applied successfully.");
-//     }
-//     catch (Exception ex)
-//     {
-//         Console.WriteLine($"Migration failed: {ex.Message}");
-//         throw;
-//     }
-// }
 
 // Swagger always on
 app.UseSwagger();

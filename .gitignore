@@ -1,2 +1,5 @@
 // .gitignore file for a .NET project
 appsettings.Development.json
+**/bin/
+**/obj/
+/.vs    
