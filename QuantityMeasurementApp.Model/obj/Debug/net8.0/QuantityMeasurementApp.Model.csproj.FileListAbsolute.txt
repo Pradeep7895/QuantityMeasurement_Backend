@@ -1,0 +1,11 @@
+D:\QuantityMeasurement_Backend_FIXED\QM_FIXED\QuantityMeasurementApp.Model\bin\Debug\net8.0\QuantityMeasurementApp.Model.deps.json
+D:\QuantityMeasurement_Backend_FIXED\QM_FIXED\QuantityMeasurementApp.Model\bin\Debug\net8.0\QuantityMeasurementApp.Model.dll
+D:\QuantityMeasurement_Backend_FIXED\QM_FIXED\QuantityMeasurementApp.Model\bin\Debug\net8.0\QuantityMeasurementApp.Model.pdb
+D:\QuantityMeasurement_Backend_FIXED\QM_FIXED\QuantityMeasurementApp.Model\obj\Debug\net8.0\QuantityMeasurementApp.Model.GeneratedMSBuildEditorConfig.editorconfig
+D:\QuantityMeasurement_Backend_FIXED\QM_FIXED\QuantityMeasurementApp.Model\obj\Debug\net8.0\QuantityMeasurementApp.Model.AssemblyInfoInputs.cache
+D:\QuantityMeasurement_Backend_FIXED\QM_FIXED\QuantityMeasurementApp.Model\obj\Debug\net8.0\QuantityMeasurementApp.Model.AssemblyInfo.cs
+D:\QuantityMeasurement_Backend_FIXED\QM_FIXED\QuantityMeasurementApp.Model\obj\Debug\net8.0\QuantityMeasurementApp.Model.csproj.CoreCompileInputs.cache
+D:\QuantityMeasurement_Backend_FIXED\QM_FIXED\QuantityMeasurementApp.Model\obj\Debug\net8.0\QuantityMeasurementApp.Model.dll
+D:\QuantityMeasurement_Backend_FIXED\QM_FIXED\QuantityMeasurementApp.Model\obj\Debug\net8.0\refint\QuantityMeasurementApp.Model.dll
+D:\QuantityMeasurement_Backend_FIXED\QM_FIXED\QuantityMeasurementApp.Model\obj\Debug\net8.0\QuantityMeasurementApp.Model.pdb
+D:\QuantityMeasurement_Backend_FIXED\QM_FIXED\QuantityMeasurementApp.Model\obj\Debug\net8.0\ref\QuantityMeasurementApp.Model.dll

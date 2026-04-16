@@ -1,0 +1,17 @@
+D:\QuantityMeasurement_Backend_FIXED\QM_FIXED\QuantityMeasurementApp.Service\obj\Debug\net8.0\QuantityMeasurementApp.Service.csproj.AssemblyReference.cache
+D:\QuantityMeasurement_Backend_FIXED\QM_FIXED\QuantityMeasurementApp.Service\obj\Debug\net8.0\QuantityMeasurementApp.Service.GeneratedMSBuildEditorConfig.editorconfig
+D:\QuantityMeasurement_Backend_FIXED\QM_FIXED\QuantityMeasurementApp.Service\obj\Debug\net8.0\QuantityMeasurementApp.Service.AssemblyInfoInputs.cache
+D:\QuantityMeasurement_Backend_FIXED\QM_FIXED\QuantityMeasurementApp.Service\obj\Debug\net8.0\QuantityMeasurementApp.Service.AssemblyInfo.cs
+D:\QuantityMeasurement_Backend_FIXED\QM_FIXED\QuantityMeasurementApp.Service\obj\Debug\net8.0\QuantityMeasurementApp.Service.csproj.CoreCompileInputs.cache
+D:\QuantityMeasurement_Backend_FIXED\QM_FIXED\QuantityMeasurementApp.Service\bin\Debug\net8.0\QuantityMeasurementApp.Service.deps.json
+D:\QuantityMeasurement_Backend_FIXED\QM_FIXED\QuantityMeasurementApp.Service\bin\Debug\net8.0\QuantityMeasurementApp.Service.dll
+D:\QuantityMeasurement_Backend_FIXED\QM_FIXED\QuantityMeasurementApp.Service\bin\Debug\net8.0\QuantityMeasurementApp.Service.pdb
+D:\QuantityMeasurement_Backend_FIXED\QM_FIXED\QuantityMeasurementApp.Service\bin\Debug\net8.0\QuantityMeasurementApp.Model.dll
+D:\QuantityMeasurement_Backend_FIXED\QM_FIXED\QuantityMeasurementApp.Service\bin\Debug\net8.0\QuantityMeasurementApp.Repository.dll
+D:\QuantityMeasurement_Backend_FIXED\QM_FIXED\QuantityMeasurementApp.Service\bin\Debug\net8.0\QuantityMeasurementApp.Model.pdb
+D:\QuantityMeasurement_Backend_FIXED\QM_FIXED\QuantityMeasurementApp.Service\bin\Debug\net8.0\QuantityMeasurementApp.Repository.pdb
+D:\QuantityMeasurement_Backend_FIXED\QM_FIXED\QuantityMeasurementApp.Service\obj\Debug\net8.0\Quantity.45072C65.Up2Date
+D:\QuantityMeasurement_Backend_FIXED\QM_FIXED\QuantityMeasurementApp.Service\obj\Debug\net8.0\QuantityMeasurementApp.Service.dll
+D:\QuantityMeasurement_Backend_FIXED\QM_FIXED\QuantityMeasurementApp.Service\obj\Debug\net8.0\refint\QuantityMeasurementApp.Service.dll
+D:\QuantityMeasurement_Backend_FIXED\QM_FIXED\QuantityMeasurementApp.Service\obj\Debug\net8.0\QuantityMeasurementApp.Service.pdb
+D:\QuantityMeasurement_Backend_FIXED\QM_FIXED\QuantityMeasurementApp.Service\obj\Debug\net8.0\ref\QuantityMeasurementApp.Service.dll

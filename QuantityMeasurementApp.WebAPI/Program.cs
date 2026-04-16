@@ -1,0 +1,131 @@
+using Microsoft.EntityFrameworkCore;
+using QuantityMeasurementApp.Repository.Implementations;
+using QuantityMeasurementApp.Repository.Interfaces;
+using QuantityMeasurementApp.Service.Interfaces;
+using QuantityMeasurementApp.Service.Services;
+using StackExchange.Redis;
+using NLog.Web;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Logging
+builder.Logging.ClearProviders();
+builder.Logging.SetMinimumLevel(LogLevel.Trace);
+builder.Host.UseNLog();
+
+// DB - reads from env var ConnectionStrings__DefaultConnection on Railway
+var connStr = builder.Configuration.GetConnectionString("DefaultConnection");
+if (string.IsNullOrWhiteSpace(connStr))
+    throw new InvalidOperationException("DefaultConnection is not configured. Set ConnectionStrings__DefaultConnection in Railway Variables.");
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(connStr));
+
+// Redis - optional, app still works without it
+var redisConn = builder.Configuration.GetConnectionString("Redis");
+if (!string.IsNullOrWhiteSpace(redisConn))
+{
+    try
+    {
+        builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
+            ConnectionMultiplexer.Connect(redisConn));
+    }
+    catch
+    {
+        builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
+            ConnectionMultiplexer.Connect("localhost:6379,abortConnect=false"));
+    }
+}
+else
+{
+    builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
+        ConnectionMultiplexer.Connect("localhost:6379,abortConnect=false"));
+}
+builder.Services.AddScoped<RedisCacheService>();
+
+// Services
+builder.Services.AddScoped<IQuantityService, QuantityService>();
+builder.Services.AddScoped<IConversionService, ConversionService>();
+builder.Services.AddScoped<IArithmeticService, ArithmeticService>();
+builder.Services.AddScoped<IEqualityService, EqualityService>();
+builder.Services.AddScoped<IValidationService, ValidationService>();
+
+// Repository
+builder.Services.AddScoped<IQuantityHistoryRepository, QuantityHistoryRepository>();
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+// JWT - throws a clear error if key is missing
+var jwtKey = builder.Configuration["Jwt:Key"]
+    ?? throw new InvalidOperationException("Jwt:Key is not configured. Set Jwt__Key in Railway Variables.");
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+    });
+
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
+// PORT - Railway injects this automatically
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+builder.WebHost.UseUrls($"http://*:{port}");
+
+var app = builder.Build();
+
+// Auto-run migrations on startup - creates tables if they don't exist
+// using (var scope = app.Services.CreateScope())
+// {
+//     try
+//     {
+//         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+//         db.Database.Migrate();
+//         Console.WriteLine("Database migrations applied successfully.");
+//     }
+//     catch (Exception ex)
+//     {
+//         Console.WriteLine($"Migration failed: {ex.Message}");
+//         throw;
+//     }
+// }
+
+// Swagger always on
+app.UseSwagger();
+app.UseSwaggerUI();
+
+// Correct middleware order - CORS must be before auth
+app.UseCors("AllowAll");
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseMiddleware<GlobalExceptionMiddleware>();
+
+// REMOVED: app.UseHttpsRedirection() - Railway handles HTTPS at load balancer
+
+app.MapControllers();
+app.MapGet("/", () => "Quantity Measurement API is running...");
+
+app.Run();
