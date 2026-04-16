@@ -31,9 +31,11 @@ if (!string.IsNullOrEmpty(redisConnection))
 {
     try
     {
-        var redis = ConnectionMultiplexer.Connect(redisConnection);
-        builder.Services.AddSingleton<IConnectionMultiplexer>(redis);
+        var options = ConfigurationOptions.Parse(redisConnection);
+        options.AbortOnConnectFail = false;
 
+        var redis = ConnectionMultiplexer.Connect(options);
+        builder.Services.AddSingleton<IConnectionMultiplexer>(redis);
         builder.Services.AddScoped<RedisCacheService>();
     }
     catch (Exception ex)
@@ -41,6 +43,7 @@ if (!string.IsNullOrEmpty(redisConnection))
         Console.WriteLine("Redis failed: " + ex.Message);
     }
 }
+
 // Services
 builder.Services.AddScoped<IQuantityService, QuantityService>();
 builder.Services.AddScoped<IConversionService, ConversionService>();
