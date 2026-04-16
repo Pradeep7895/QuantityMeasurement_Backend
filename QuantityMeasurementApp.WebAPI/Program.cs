@@ -32,9 +32,13 @@ if (!string.IsNullOrEmpty(redisConnection))
     try
     {
         var options = ConfigurationOptions.Parse(redisConnection);
+
         options.AbortOnConnectFail = false;
+        options.ConnectRetry = 3;
+        options.ConnectTimeout = 5000;
 
         var redis = ConnectionMultiplexer.Connect(options);
+
         builder.Services.AddSingleton<IConnectionMultiplexer>(redis);
         builder.Services.AddScoped<RedisCacheService>();
     }
